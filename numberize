@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+import optparse
+import sys
+from numberizer import number_to_text
+
+def backup_configs(client, directory, jobs, verbose):
+	if not jobs:
+		jobs = [j["name"] for j in client.get_jobs()]
+
+	for job in jobs:
+		k.jenkins.jenkins.backup_config(client, directory, job, verbose=verbose)
+
+def option_parser():
+	usage = "usage: %prog <number>"
+	usage += "\n\nConverts a number to a text representation in dollars"
+	parser = optparse.OptionParser(usage=usage)
+	return parser
+
+def main():
+	parser = option_parser()
+	(opts, args) = parser.parse_args()
+	if len(args) != 1:
+		sys.stderr.write("Argument <number> required")
+		sys.exit(1)
+	print number_to_text(args[0])
+
+if __name__ == "__main__":
+	main()
+
